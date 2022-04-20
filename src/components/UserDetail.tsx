@@ -58,7 +58,7 @@ const UserDetail: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {state.user && (
+              {Object.keys(state.user).length > 0 && (
                 <tr key={state.user.id}>
                   <td>{state.user.id}</td>
                   <td>{state.user.name}</td>
