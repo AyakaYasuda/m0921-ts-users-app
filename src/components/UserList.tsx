@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useTransition } from "react";
 import { IUser } from "../model/IUser";
 import { UserService } from "../services/UserService";
+import { Link } from "react-router-dom";
 
 interface IState {
   loading: boolean;
@@ -12,34 +13,31 @@ const UserList: FC = () => {
   const [state, setState] = useState<IState>({
     loading: false,
     users: [] as IUser[],
-    errorMessage: ""
+    errorMessage: "",
   });
 
   useEffect(() => {
-    setState((prev) => ({ ...prev, loading: !prev.loading }));
+    setState(prev => ({ ...prev, loading: !prev.loading }));
 
     UserService.getAllUsers()
-      .then((response) => {
+      .then(response => {
         setState({
           ...state,
           loading: false,
-          users: response.data
+          users: response.data,
         });
       })
-      .catch((error) => {
+      .catch(error => {
         setState({
           ...state,
           loading: false,
-          errorMessage: error.message
+          errorMessage: error.message,
         });
       });
-      
   }, []);
 
-  if(state.loading){
-      return(
-          <div>LOADING......</div>
-      )
+  if (state.loading) {
+    return <div>LOADING......</div>;
   }
 
   return (
@@ -60,10 +58,12 @@ const UserList: FC = () => {
             </thead>
             <tbody>
               {state.users.length > 0 &&
-                state.users.map((user) => (
+                state.users.map(user => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
-                    <td>{user.name}</td>
+                    <td>
+                      <Link to={`/user-detail/${user.id}`}>{user.name}</Link>
+                    </td>
                     <td>{user.email}</td>
                     <td>{user.phone}</td>
                     <td>{user.company.name}</td>

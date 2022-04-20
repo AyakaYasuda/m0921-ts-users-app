@@ -1,15 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { useRoutes } from "react-router-dom";
 import Customer from "./components/Customer";
 import CustomerClass from "./components/CustomerClass";
-import Employee from './components/Employee';
+import Employee from "./components/Employee";
 import EmployeeClass from "./components/EmployeeClass";
 import Counter from "./components/Counter";
-import Greetings from './components/Greetings'
+import Greetings from "./components/Greetings";
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
+import UserDetail from "./components/UserDetail";
 
 function App() {
+  const routes = useRoutes([
+    { path: "/", element: <UserList /> },
+    { path: "/user-detail/:uid", element: <UserDetail /> },
+  ]);
+
   return (
     <div className="container py-3">
       <div className="grid">
@@ -65,12 +72,8 @@ function App() {
         </div> */}
 
         <div className="row">
-          <div className="col">
-            <UserList />
-          </div>
+          <div className="col">{routes}</div>
         </div>
-
-
       </div>
     </div>
   );
